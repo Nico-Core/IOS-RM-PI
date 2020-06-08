@@ -22,10 +22,9 @@ class ViewRouter: ObservableObject {
 
 struct MainView: View {
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var client: Client
     
     var body: some View {
-        
-        //No chance to implement it with switch cases >:-(
         VStack{
             if viewRouter.currentPage == "ConView" {
                 ConnectionView()
@@ -37,7 +36,9 @@ struct MainView: View {
 }
 
 struct MainView_Previews: PreviewProvider {
+    static let client = Client()
+    
     static var previews: some View {
-        MainView().environmentObject(ViewRouter())
+        MainView().environmentObject(ViewRouter()).environmentObject(client)
     }
 }

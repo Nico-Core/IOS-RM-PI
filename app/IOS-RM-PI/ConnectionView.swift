@@ -12,15 +12,16 @@ import SwiftUI
 
 struct ConnectionView: View {
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var client: Client
     
-    @State var ip : String = ""
-    @State var port : String = ""
-    @State var errToCon : Bool = false
+    @State private var ip : String = ""
+    @State private var port : String = ""
+    @State private var errToCon : Bool = false
     
     
     func buttonActionConnect() {
         do{
-            try Client.shared.connect(ip: self.ip, port: self.port)
+            try client.Connect(ip: self.ip, port: self.port)
             errToCon = false
             viewRouter.currentPage = "RemView"
         } catch {
@@ -57,7 +58,9 @@ struct ConnectionView: View {
 }
 
 struct ConnectionView_Previews: PreviewProvider {
+    static let client = Client()
+    
     static var previews: some View {
-        ConnectionView().environmentObject(ViewRouter())
+        ConnectionView().environmentObject(ViewRouter()).environmentObject(client)
     }
 }
