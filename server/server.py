@@ -139,7 +139,7 @@ class server:
         self.__serverSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
        
         try:
-            self.__serverSocket.bind(("localhost", 1000))
+            self.__serverSocket.bind(("", 1000))
         except:
             print("Bind failed. Error : " + str(sys.exc_info()))
             sys.exit()
