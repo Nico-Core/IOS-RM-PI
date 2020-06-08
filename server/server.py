@@ -38,7 +38,7 @@ class ioPi:
         
     def DeleteIO( self, name:str):
         self.__change = True
-        #IO aus liste loeschen
+        #delete output pin from the pin list is missing
 
     def ChangeIO( self, name:str, state:bool):
         for data in self.__ioData: 
@@ -78,7 +78,7 @@ class ioPi:
             print("Not changed!!!") 
 
 
-#multi client support for changed output pin state
+#multi client support for changed output pin state is missing
 class clientHandler(Thread):
     def __init__(self, threadList, conn, io):
         self.__threadList       = threadList
