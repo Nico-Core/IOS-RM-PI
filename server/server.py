@@ -78,7 +78,7 @@ class ioPi:
             print("Not changed!!!") 
 
 
-#multiclient changed implementieren
+#multi client support for changed output pin state
 class clientHandler(Thread):
     def __init__(self, threadList, conn, io):
         self.__threadList       = threadList
