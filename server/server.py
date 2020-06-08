@@ -46,16 +46,17 @@ class ioPi:
                 data[2] = state
                 if state :
                     if DEBUG: 
-                        print("on")
+                        print(str(name)+" : "+str(state))
                     else:
+                        print(str(name)+" : "+str(state))
                         data[1].on()
-                    
                 else:
                     if DEBUG:
-                        print("off")
+                        print(str(name)+" : "+str(state))
                     else:
+                        print(str(name)+" : "+str(state))
                         data[1].off()
-                    
+                         
                 self.__change = True
                 return True
         return False                
@@ -91,15 +92,16 @@ class clientHandler(Thread):
         if self.__ioData.Changed():
             self.__connClient.send( comProtcol.ok.value.encode("utf8") )
             self.__connClient.send( str(self.__ioData.SizeOfDataList() ).encode("utf8") )
-
-            com = self.__connClient.recv(1).decode("utf8")
-            if com == comProtcol.ok.value:
+            
+            command = self.__connClient.recv(1).decode("utf8")
+            if command == comProtcol.ok.value:
                 for data in self.__ioData.GetData():
                     self.__connClient.send( struct.pack(">10s?", data[0].encode("utf8"), data[2]) )
-            elif com == comProtcol.fail.value:
+            elif command == comProtcol.fail.value:
                 return
 
         else:
+            print("Nothing changed")
             self.__connClient.send(comProtcol.end.value.encode("utf8"))
 
     def ChangeState(self):
@@ -165,13 +167,15 @@ if __name__ == '__main__':
     Server = server()
 
     if DEBUG:
+        print("Debug mode")
         Server.ioStream.CreateIO( "Licht1", 1)
         Server.ioStream.CreateIO( "Licht2", 1)
         Server.ioStream.CreateIO( "Licht3", 1)
         Server.ioStream.CreateIO( "Licht4", 1)
         Server.ioStream.CreateIO( "Licht5", 1)
     else:
-        Server.ioStream.ChangeIO( "Licht 1", 4)
+        print("Live mode")
+        Server.ioStream.CreateIO( "Licht1", 4)
 
     Server.Main()
     input("End")
