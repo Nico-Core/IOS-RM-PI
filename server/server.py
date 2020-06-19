@@ -1,4 +1,4 @@
-DEBUG = False
+DEBUG = True
 
 import socket
 import struct
@@ -15,29 +15,31 @@ SIZEOFDATA = 11
 class comProtcol(Enum):
     isChanged = "1"
     ok = "2" 
-    sendData = "3"
-    fail = "4"
-    changeState = "5"
-    closeCon = "6"
-    end = "7"
+    fail = "3"
+    changeState = "4"
+    closeCon = "5"
+    end = "6"
 
 
 
 class ioPi:
     def __init__( self):
-        self.__change : bool    = False
-        self.__ioData           = []
+        self.__ioData = []
 
     def CreateIO( self, name:str, pin:int):
-        self.__change = True
+        if len(name) > 10:
+            return False
+
         if DEBUG:
             self.__ioData.append([name, pin, False])
         else:
             self.__ioData.append([name, gpiozero.DigitalOutputDevice(pin),False])
+
+        return True
         
         
     def DeleteIO( self, name:str):
-        self.__change = True
+        pass
         #delete output pin from the pin list is missing
 
     def ChangeIO( self, name:str, state:bool):
@@ -56,64 +58,89 @@ class ioPi:
                     else:
                         print(str(name)+" : "+str(state))
                         data[1].off()
-                         
-                self.__change = True
                 return True
         return False                
-          
-    def Changed( self):
-        return self.__change
 
     def SizeOfDataList(self):
         return len( self.__ioData )
 
     def GetData( self):
-        self.__change = False
         return self.__ioData
 
-    def TestGetData( self):
-        if self.__change:
+    if DEBUG:
+        def TestGetData( self):
             for data in self.__ioData:
                 print(data[0] + "-" + str(data[1]) + "-" + str(data[2]))
-        else:
-            print("Not changed!!!") 
 
 
 #multi client support for changed output pin state is missing
 class clientHandler(Thread):
     def __init__(self, threadList, conn, io):
+        self.__changed : bool   = True
         self.__threadList       = threadList
         self.__connClient       = conn
         self.__ioData           = io
 
         Thread.__init__(self)
 
+
     def IsChanged(self):
-        if self.__ioData.Changed():
+        if self.__changed:
+            if DEBUG:
+                print("Function IsChanged")
+
             self.__connClient.send( comProtcol.ok.value.encode("utf8") )
+            if DEBUG:
+                print("Send command: ok")
+
             self.__connClient.send( str(self.__ioData.SizeOfDataList() ).encode("utf8") )
+            if DEBUG:
+                print("Send size of data: "+str(self.__ioData.SizeOfDataList()))
             
             command = self.__connClient.recv(1).decode("utf8")
+            if DEBUG:
+                print("IsChanged command : " + command)
+
             if command == comProtcol.ok.value:
+                if DEBUG:
+                    print("Start send data")
+
                 for data in self.__ioData.GetData():
                     self.__connClient.send( struct.pack(">10s?", data[0].encode("utf8"), data[2]) )
+                self.__changed = False
+
+                if DEBUG:
+                    print("End send Data")
             elif command == comProtcol.fail.value:
                 return
 
         else:
-            print("Nothing changed")
+            if DEBUG:
+                print("Nothing changed")
             self.__connClient.send(comProtcol.end.value.encode("utf8"))
 
+
     def ChangeState(self):
+        if DEBUG:
+            print("Function ChangeState")
+
         self.__connClient.send( comProtcol.ok.value.encode("utf8") )
         name, state = struct.unpack(">10s?", self.__connClient.recv(SIZEOFDATA))
+
+        if DEBUG:
+            print(str(name) + " : " + str(state))
+
         self.__ioData.ChangeIO( str(name, "utf8").split('\x00')[0], state )
+        self.__changed = True
+
 
     def run(self):
         alive = True
         while alive: #stop by timeout is missing
             try:
                 command = self.__connClient.recv(1).decode("utf8")
+                if DEBUG:
+                    print("clientHandler command : " + str(command))
             except:
                 print("Error : " + str(sys.exc_info()))
                 break
@@ -124,6 +151,7 @@ class clientHandler(Thread):
                 self.ChangeState()
             elif command == comProtcol.closeCon.value:
                 alive = False
+                print("Close connection")
             else:
                 alive = False
 
@@ -171,11 +199,14 @@ if __name__ == '__main__':
         Server.ioStream.CreateIO( "Licht1", 1)
         Server.ioStream.CreateIO( "Licht2", 1)
         Server.ioStream.CreateIO( "Licht3", 1)
-        Server.ioStream.CreateIO( "Licht4", 1)
-        Server.ioStream.CreateIO( "Licht5", 1)
+        Server.ioStream.CreateIO( "MotorLinks", 1)
+        Server.ioStream.CreateIO( "MotorRechts", 1)
+
+        Server.ioStream.ChangeIO("Licht1", True)
+
     else:
         print("Live mode")
-        Server.ioStream.CreateIO( "Licht1", 4)
+        Server.ioStream.CreateIO( "LED1", 4)
 
     Server.Main()
     input("End")
