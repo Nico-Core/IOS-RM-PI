@@ -21,7 +21,7 @@ Um den Server auf dem PI zu starten muss folgendes in eure Shell eingeben:
 cd ./{Pfad zum Ordner von server.py}
 sudo python3 server.py
 ```
-Falls die Firewall aktiviert ist muss vorher, wenn noch nicht geändert, der Port 1000 für eine TCP-Verbindung frei geben.
+Falls die Firewall aktiviert ist, muss vorher, wenn noch nicht geändert, der Port 1000 für eine TCP-Verbindung frei geben.
 
 ## Server konfigurieren
 ###### Port einstellen
