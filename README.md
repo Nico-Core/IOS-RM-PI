@@ -6,7 +6,7 @@ Um sich mit einem Server zu verbinden ist die IP/URL und den Port des Servers n�
 Nach dem drücken auf **Verbinden** wird sich mit dem Server verbunden und eine Liste mit den zu schaltenden Ausgängen wird sichtbar.<br/>
 Im Fehlerfall erscheint unter **Verbinden**: **Verbindungsfehler**
 
-## Installation von Server-Bibliotheken
+## Installation Server-Bibliotheken
 ```bash
 sudo apt update
 sudo apt install python3-gpiozero
@@ -87,7 +87,7 @@ if __name__ == '__main__':
     input("End")
 ```
 
-###### Server im Debug-Mode laufen lassen
+###### Server Debug-Mode
 Möchte man den Server auf einem Windows, Linux oder Mac testen, ist es möglich den Server im Debug Mode alufen zu lassen.
 Am Anfang der **server.py** Datei steht folgendes:
 ```python
