@@ -1,5 +1,5 @@
 # IOS-RM-PI
-Mittels der IOS-RM-PI App ist es möglich die Ausgänge des Raspberry PI zu steuern.
+Mittels der IOS-RM-PI App ist es möglich die Ausgänge des Raspberry PI über das IPhone zu steuern.
 
 ## Bedienung der App
 Um sich mit einem Server zu verbinden ist die IP/URL und den Port des Servers nötig.
