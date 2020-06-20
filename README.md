@@ -102,4 +102,6 @@ False :
 - Der Server startet im Live-Mode
 - Ausgänge des PIs werden geschaltet
 
-
+# Todo
+- Multiclient
+- Genauere Error-Codes
