@@ -61,11 +61,15 @@ final public class Client : ObservableObject{
             throw clientErr.failCon
         }
         
-       do{
+        do{
             connect = try Socket.create(family: .inet, type: .stream, proto: .tcp)
-            connect!.readBufferSize = 11
-            try connect!.connect(to: ip, port: Int32(port)!, timeout: 100)
-            try Refresh()
+            if let con = connect{
+                con.readBufferSize = 11
+                try con.connect(to: ip, port: Int32(port)!, timeout: 100)
+                try Refresh()
+            }else{
+                throw clientErr.failCon
+            }
         }catch(let error){
             print(error.localizedDescription)
             throw clientErr.failCon
@@ -75,7 +79,11 @@ final public class Client : ObservableObject{
     
     func Disconnect() throws{
         try SendCom(comProtcol.closeCon)
-        connect!.close()
+        if let con = self.connect{
+            con.close()
+        }else{
+            throw clientErr.failCon
+        }
         print("Verbindung trennen")
     }
     
@@ -136,9 +144,13 @@ final public class Client : ObservableObject{
     
     private func ReceiveData( size s : UInt8) throws -> Data{
         let dataBuffer = UnsafeMutablePointer<CChar>.allocate(capacity: Int(s))
-    
-        guard try connect!.read(into: dataBuffer, bufSize: Int(s), truncate: true) > 0 else{
-            throw clientErr.failRecvData
+        
+        if let con = connect{
+            guard try con.read(into: dataBuffer, bufSize: Int(s), truncate: true) > 0 else{
+                throw clientErr.failRecvData
+            }
+        }else{
+            throw clientErr.failCon
         }
         
         return Data(bytes: dataBuffer, count: Int(s))
@@ -146,12 +158,20 @@ final public class Client : ObservableObject{
     
     
     private func SendData( Data d : Data ) throws {
-        try connect!.write(from: d)
+        if let con = connect{
+            try con.write(from: d)
+        }else{
+            throw clientErr.failCon
+        }
     }
     
     
     private func SendCom( _ command : comProtcol ) throws{
-        try connect!.write(from: command.rawValue)
+        if let con = connect{
+            try con.write(from: command.rawValue)
+        }else{
+            throw clientErr.failCon
+        }
     }
     
     
