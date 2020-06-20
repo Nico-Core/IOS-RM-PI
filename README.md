@@ -5,9 +5,7 @@ Mittels der IOS-RM-PI App ist es möglich die Ausgänge des Raspberry PI zu steu
 Um sich mit einem Server zu verbinden ist die IP/URL und den Port des Servers nötig.
 Nach dem drücken auf **Verbinden** wird sich mit dem Server verbunden und eine Liste mit den zu schaltenden Ausgängen wird sichtbar.
 Im Fehlerfall erscheint unter **Verbinden**:
-<div class="text-red mb-2">
-  Verbindungsfehler
-</div>
+<font color="red"> Verbindungsfehler </font>
 
 
 ## Installation von Server-Bibliotheken
