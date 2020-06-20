@@ -16,16 +16,16 @@ sudo pip3 install gpiozero
 ```
 
 ## Server starten
-Um den Server auf eurem PI zu starten müsst ihr folgendes in eure Shell eingeben:
+Um den Server auf dem PI zu starten muss folgendes in eure Shell eingeben:
 ```bash
 cd ./{Pfad zum Ordner von server.py}
 sudo python3 server.py
 ```
-Falls ihr die Firewall aktiviert habt müsst ihr vorher, wenn noch nicht geändert, den Port 1000 für eine TCP-Verbindung frei geben.
+Falls die Firewall aktiviert ist muss vorher, wenn noch nicht geändert, der Port 1000 für eine TCP-Verbindung frei geben.
 
 ## Server konfigurieren
 ###### Port einstellen
-Der Server ist ohne Änderungen auf den Port 1000 eingestellt. Möchte man einen Port seiner Wahl haben, muss man im folgenden Quelltextabschnitt die `1000` gegen einen beliebigen Port ersetzen. 
+Der Server ist auf den Port 1000 eingestellt. Möchte man einen Port seiner Wahl haben, muss im folgenden Quelltextabschnitt die `1000` gegen einen beliebigen Port ersetzen. 
 
 ```python
 class server:
