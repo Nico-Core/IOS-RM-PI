@@ -1,8 +1,14 @@
 # IOS-RM-PI
 Mittels der IOS-RM-PI App ist es möglich die Ausgänge des Raspberry PI zu steuern.
 
-## Funktionsweise der App
-coming soon
+## Bedienung der App
+Um sich mit einem Server zu verbinden ist die IP/URL und den Port des Servers nötig.
+Nach dem drücken auf **Verbinden** wird sich mit dem Server verbunden und eine Liste mit den zu schaltenden Ausgängen wird sichtbar.
+Im Fehlerfall erscheint unter **Verbinden**:
+<div class="text-red mb-2">
+  Verbindungsfehler
+</div>
+
 
 ## Installation von Server-Bibliotheken
 ```bash
@@ -16,12 +22,12 @@ sudo pip3 install gpiozero
 ```
 
 ## Server starten
-Um den Server auf dem PI zu starten muss folgendes in eure Shell eingeben:
+Um den Server auf dem PI, Linux, Mac zu starten muss folgendes in eure Shell eingeben:
 ```bash
 cd ./{Pfad zum Ordner von server.py}
 sudo python3 server.py
 ```
-Falls die Firewall aktiviert ist, muss vorher, wenn noch nicht geändert, der Port 1000 für eine TCP-Verbindung frei geben.
+Falls die Firewall auf dem PI aktiviert ist, muss vorher, wenn noch nicht geändert, der Port 1000 für eine TCP-Verbindung frei geben.
 
 ## Server konfigurieren
 ###### Port einstellen
