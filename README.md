@@ -32,7 +32,7 @@ class server:
     def __init__(self):
 ...
         try:
-            self.__serverSocket.bind(("", **1000** ))
+            self.__serverSocket.bind(("", 1000 ))
         except:
             print("Bind failed. Error : " + str(sys.exc_info()))
             sys.exit()
@@ -87,7 +87,7 @@ if __name__ == '__main__':
 
 ###### Server im Debug-Mode laufen lassen
 Möchte man den Server auf einem Windows, Linux oder Mac testen, ist es möglich den Server im Debug Mode alufen zu lassen.
-Am Anfang der server.py Datei steht folgendes:
+Am Anfang der **server.py** Datei steht folgendes:
 ```python
 DEBUG = True
 ```
