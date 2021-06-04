@@ -2,9 +2,6 @@
 //  ConnectionView.swift
 //  IOS-RM-PI
 //
-//  Created by Nicolas Kohr on 26.05.20.
-//  Copyright © 2020 Nicolas Kohr. All rights reserved.
-//
 
 import Foundation
 import Combine
