@@ -2,9 +2,6 @@
 //  AppDelegate.swift
 //  IOS-RM-PI
 //
-//  Created by Nicolas Kohr on 25.05.20.
-//  Copyright © 2020 Nicolas Kohr. All rights reserved.
-//
 
 import UIKit
 
