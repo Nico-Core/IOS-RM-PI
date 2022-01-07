@@ -23,8 +23,6 @@ Um den Server auf dem PI, Linux, Mac zu starten muss folgendes in eure Shell ein
 cd ./{Pfad zum Ordner von server.py}
 sudo python3 server.py
 ```
-Falls die Firewall auf dem PI aktiviert ist, muss vorher, wenn noch nicht geändert, der Port 1000 für eine TCP-Verbindung frei geben.
-
 ## Server konfigurieren
 ###### Port einstellen
 Der Server ist auf den Port 1000 eingestellt. Möchte man einen Port seiner Wahl haben, muss im folgenden Quelltextabschnitt die **1000** gegen einen beliebigen Port ersetzen. 
